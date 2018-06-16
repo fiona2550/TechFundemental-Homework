@@ -1,0 +1,58 @@
+library(readxl)
+manhattan <- read_excel("C:/Users/Jialing Hu/Desktop/BSAN/Spring/Data Analytics/New folder/rollingsales_manhattan.xls",range = cell_rows(5:27400))
+manhattan
+attach(manhattan)
+counts <- table(manhattan$NEIGHBORHOOD)
+barplot(counts, main="Manhattan Distribution", horiz=TRUE)
+hist(manhattan$`SALE
+PRICE`) 
+library(car)
+scatterplotMatrix(manhattan)
+scatterplotMatrix(iris)
+
+colMeans(is.na(manhattan))
+lapply(manhattan, class)
+#How to deal with missing value?
+#Could I remove some columns?
+#Borough value is all 1 so I don't this column is not meaningful to our model.
+
+plot(log(manhattan$`LAND SQUARE FEET`),log(manhattan$`SALE
+PRICE`) )
+
+plot((manhattan$`LAND SQUARE FEET`),(manhattan$`SALE
+PRICE`) )
+
+plot(ecdf(subset(manhattan$`SALE
+PRICE`, subset = manhattan$`SALE
+PRICE`!=0)),xlab= 'SALE PRICE', ylab = '',main ='ECDF of Sale Price')
+
+plot(ecdf(is.na(manhattan$`SALE 
+                PRICE`)))
+plot(ecdf(is.na(manhattan$`SALE
+PRICE`)))
+qqnorm(subset(manhattan$`SALE
+PRICE`, subset = manhattan$`SALE
+PRICE` !=0))
+
+SalePriceNo0 <- subset(manhattan$`SALE
+PRICE`, subset = manhattan$`SALE
+PRICE`!=0)
+SalePrice<-matrix(SalePriceNo0)
+hist(SalePrice)
+summary(manhattan$`SALE
+PRICE`)
+
+table(manhattan$`BUILDING CLASS CATEGORY`)
+CAT<-aggregate(manhattan$`SALE
+PRICE` ~ manhattan$`BUILDING CLASS CATEGORY`, manhattan, mean)
+
+ggplot(manhattan, aes(x=manhattan$`BUILDING CLASS CATEGORY`, y=manhattan$`SALE
+PRICE`)) + stat_summary(fun.y="mean", geom="bar")
+
+m3<-lm(log(manhattan$`SALE
+PRICE`)~0+log(manhattan$`LAND SQUARE FEET`)+factor(manhattan$`BUILDING CLASS CATEGORY`), na.action=na.exclude)
+summary(m3)
+
+m0<-lm(log(`)~log(manhattan$`LAND SQUARE FEET`), na.action=na.exclude)
+summary(m3)
+

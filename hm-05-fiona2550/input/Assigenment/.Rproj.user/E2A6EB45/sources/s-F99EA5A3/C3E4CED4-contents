@@ -1,0 +1,13 @@
+library(e1071)
+delay.df <- read.csv("C:/Users/Jialing Hu/Desktop/BSAN/Spring/Data Analytics/FlightDelays.csv")
+delay.df$dayweek<-factor(delay.df$dayweek)
+delay.df$daytime<-factor(delay.df$daytime)
+delay.df$deptime<-factor(round(delay.df$deptime/100))
+selected.var <- c(10, 1, 8, 4, 2, 13)
+train.index <- sample(c(1:dim(delay.df)[1]), dim(delay.df)[1]*0.6)
+train.df <- delay.df[train.index, selected.var]
+valid.df <- delay.df[-train.index, selected.var]
+delays.nb <- naiveBayes(delay ~ ., data = train.df)
+delays.nb
+pred.prob <- predict(delays.nb, newdata = valid.df, type = "raw")
+pred.prob

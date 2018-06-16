@@ -1,0 +1,145 @@
+#a
+
+nyt2<-read.csv("C:/Users/Jialing Hu/Desktop/BSAN/Spring/Data Analytics/New folder/nyt2.csv")
+nyt3<-read.csv("C:/Users/Jialing Hu/Desktop/BSAN/Spring/Data Analytics/New folder/nyt3.csv")
+nyt4<-read.csv("C:/Users/Jialing Hu/Desktop/BSAN/Spring/Data Analytics/New folder/nyt4.csv")
+nyt5<-read.csv("C:/Users/Jialing Hu/Desktop/BSAN/Spring/Data Analytics/New folder/nyt5.csv")
+nyt6<-read.csv("C:/Users/Jialing Hu/Desktop/BSAN/Spring/Data Analytics/New folder/nyt6.csv")
+
+par(mfrow=c(2,3))
+boxplot(nyt2$Age)
+boxplot(nyt3$Age)
+boxplot(nyt4$Age)
+boxplot(nyt5$Age)
+boxplot(nyt6$Age)
+#The five box plots of Age look quite similar. 
+#The mean is about 32 and the first quantile is located around 0, and in this case it means the first quantile of data is invalid. 
+#There is no outliers of this variable and all data are within the range of 1.5 * IQR.
+
+par(mfrow=c(2,3))
+boxplot(nyt2$Impressions)
+boxplot(nyt3$Impressions)
+boxplot(nyt4$Impressions)
+boxplot(nyt5$Impressions)
+boxplot(nyt6$Impressions)
+#The five box plots of Impressions also look quite similar. The half part of this dataset is concentrated betwen 3 to 6.
+#There are also data with value 0, which means they are meaningless. 
+#Besides, there are outliers in this picture which is above 1.5* IQR
+
+#b
+tf<-!is.na(nyt2)
+tf<-nyt2$Age[!is.na(nyt2$Age)]
+summary(tf)
+par(mfrow=c(2,3))
+hist(nyt2$Impressions,breaks<-c(0,2,4,6,8,10,12,14,16,18,20)) 
+hist(nyt3$Impressions,breaks<-c(0,2,4,6,8,10,12,14,16,18,20))
+hist(nyt4$Impressions,breaks<-c(0,2,4,6,8,10,12,14,16,18,20))
+hist(nyt5$Impressions,breaks<-c(0,2,4,6,8,10,12,14,16,18,20))
+hist(nyt6$Impressions,breaks<-c(0,2,4,6,8,10,12,14,16,18,20))
+
+# It seems that the shapes of their overall distributions are quite simialr.
+# The main part is quiet concentrated. 
+# We could also see from the picture that the smallest is 0 and extrapolate there are outliers in the dataset. 
+
+par(mfrow=c(2,3))
+hist(nyt2$Age,breaks<-c(0,20,40,60,80,100,120))
+hist(nyt3$Age,breaks<-c(0,20,40,60,80,100,120))
+hist(nyt4$Age,breaks<-c(0,20,40,60,80,100,120))
+hist(nyt5$Age,breaks<-c(0,20,40,60,80,100,120))
+hist(nyt6$Age,breaks<-c(0,20,40,60,80,100,120))
+#Also the distributions looks similar. 
+#In all these plots, the first distribution accounts most. 
+#The fifth data set has a higher population, which also reflects in Impression variable.
+
+#c
+#ECDF
+library(lattice)
+par(mfrow=c(2,3))
+plot(ecdf(subset(nyt2$Age, subset = nyt2$Age!=0)),xlab= 'nyt2$Age', ylab = '',main ='ECDF of Age')
+plot(ecdf(subset(nyt3$Age, subset = nyt3$Age!=0)),xlab= 'nyt3$Age', ylab = '',main ='ECDF of Age')
+plot(ecdf(subset(nyt4$Age, subset = nyt4$Age!=0)),xlab= 'nyt4$Age', ylab = '',main ='ECDF of Age')
+plot(ecdf(subset(nyt5$Age, subset = nyt5$Age!=0)),xlab= 'nyt5$Age', ylab = '',main ='ECDF of Age')
+plot(ecdf(subset(nyt6$Age, subset = nyt6$Age!=0)),xlab= 'nyt6$Age', ylab = '',main ='ECDF of Age')
+
+par(mfrow=c(2,3))
+plot(ecdf(subset(nyt2$Impressions, subset = nyt2$Impressions!=0)), xlab= 'nyt2$Impressions', ylab = '',main ='ECDF of Impressions')
+plot(ecdf(subset(nyt3$Impressions, subset = nyt3$Impressions!=0)), xlab= 'nyt3$Impressions', ylab = '',main ='ECDF of Impressions')
+plot(ecdf(subset(nyt4$Impressions, subset = nyt4$Impressions!=0)), xlab= 'nyt4$Impressions', ylab = '',main ='ECDF of Impressions')
+plot(ecdf(subset(nyt5$Impressions, subset = nyt5$Impressions!=0)), xlab= 'nyt5$Impressions', ylab = '',main ='ECDF of Impressions')
+plot(ecdf(subset(nyt6$Impressions, subset = nyt6$Impressions!=0)), xlab= 'nyt6$Impressions', ylab = '',main ='ECDF of Impressions')
+
+#QQplot
+par(mfrow=c(2,3))
+qqnorm(subset(nyt2$Age, subset = nyt2$Age !=0))
+qqline(subset(nyt2$Age, subset = nyt2$Age !=0))
+qqnorm(subset(nyt3$Age, subset = nyt3$Age !=0))
+qqline(subset(nyt3$Age, subset = nyt3$Age !=0))
+qqnorm(subset(nyt4$Age, subset = nyt4$Age !=0))
+qqline(subset(nyt4$Age, subset = nyt4$Age !=0))
+qqnorm(subset(nyt5$Age, subset = nyt5$Age !=0))
+qqline(subset(nyt5$Age, subset = nyt5$Age !=0))
+qqnorm(subset(nyt6$Age, subset = nyt6$Age !=0))
+qqline(subset(nyt6$Age, subset = nyt6$Age !=0))
+
+
+par(mfrow=c(2,3))
+qqnorm(subset(nyt2$Impressions, subset = nyt2$Impressions!=0))
+qqline(subset(nyt2$Impressions, subset = nyt2$Impressions!=0))
+qqnorm(subset(nyt3$Impressions, subset = nyt3$Impressions!=0))
+qqline(subset(nyt3$Impressions, subset = nyt3$Impressions!=0))
+qqnorm(subset(nyt4$Impressions, subset = nyt4$Impressions!=0))
+qqline(subset(nyt4$Impressions, subset = nyt4$Impressions!=0))
+qqnorm(subset(nyt5$Impressions, subset = nyt5$Impressions!=0))
+qqline(subset(nyt5$Impressions, subset = nyt5$Impressions!=0))
+qqnorm(subset(nyt6$Impressions, subset = nyt6$Impressions!=0))
+qqline(subset(nyt6$Impressions, subset = nyt6$Impressions!=0))
+
+#One thing is quite similar as discussed above. These plots look quite similar. 
+#The plot looks good after removing those 0 values and these plots are nearly normally distributed.
+#For Age plot, the begining part is not as soomth as the second part.
+#When compare Impression and Age together, Impression plots are not as smooth as Age overally. 
+
+
+TTest<-t.test(subset(nyt2$Age, subset = nyt2$Age !=0),subset(nyt3$Age, subset = nyt3$Age !=0))
+TTest2 <- t.test(nyt2$Age,nyt3$Age)
+TTest3 <- t.test(nyt2$Impressions,nyt3$Impressions)
+TTest
+TTest2
+TTest3
+# We make the hypothesis that the mean of these two variables are the same and the alternative hypothis is that the mean is different.
+# We conducted t test and find that p-value is 0,8646 > 0.1
+# We do not reject the null hypothesis and conclude that the mean of Age of two datasets are the same.
+
+#e
+#We could find there are two continous variables and three flag variables.
+#Some variables have invalid records, for example, in Age column, it can't have so many 0 records.
+
+#2
+#2b
+par(mfrow=c(1,2))
+hist(nyt2$Age[which(nyt2$Gender ==1)],breaks<-c(0,20,40,60,80,100,120)) 
+hist(nyt3$Age[which(nyt3$Gender ==1)],breaks<-c(0,20,40,60,80,100,120)) 
+
+
+#2c
+par(mfrow=c(1,2))
+plot(ecdf(subset(nyt2$Age, subset = nyt2$Age!=0)[which(nyt2$Gender ==1)]),xlab= 'nyt2$Age&Gender', ylab = '',main ='ECDF of Age&Gender')
+plot(ecdf(subset(nyt2$Age, subset = nyt2$Age!=0)[which(nyt2$Gender ==1)]),xlab= 'nyt3$Age&Gender', ylab = '',main ='ECDF of Age&Gender')     
+
+par(mfrow=c(1,2))
+qqnorm(subset(nyt2$Age, subset = nyt2$Age!=0)[which(nyt2$Gender ==1)])
+qqline(subset(nyt2$Age, subset = nyt2$Age!=0)[which(nyt2$Gender ==1)])
+qqnorm(subset(nyt3$Age, subset = nyt3$Age!=0)[which(nyt3$Gender ==1)])
+qqline(subset(nyt3$Age, subset = nyt3$Age!=0)[which(nyt3$Gender ==1)])
+
+#2d
+Ttest = t.test(subset(nyt2$Age, subset = nyt2$Age!=0)[which(nyt2$Gender ==1)], subset(nyt3$Age, subset = nyt3$Age!=0)[which(nyt3$Gender ==1)])
+Ttest
+#Here I add a filter that Gender should be equal to 1. 
+#Seeing from the ECDF and QQnorm, Age after filter is also normally distributed. 
+#So I make an assumption that the mean of these two variablels should be same. 
+#the p-value is 0.9444 so under 5% confidence level, we should not reject the null hypothesis. 
+
+lapply(list(1, "a", TRUE), str)
+str(TRUE)
+

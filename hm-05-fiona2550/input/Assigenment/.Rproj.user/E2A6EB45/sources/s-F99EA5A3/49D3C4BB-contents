@@ -1,0 +1,91 @@
+#how to find variables that should be used in the model?
+library(readxl)
+manhattan <- read_excel("C:/Users/Jialing Hu/Desktop/BSAN/Spring/Data Analytics/New folder/rollingsales_brooklyn.xls",range = cell_rows(5:27400))
+
+#counts <- table(manhattan$NEIGHBORHOOD)
+#barplot(counts, main="Manhattan Distribution", horiz=TRUE)
+#hist(manhattan$`SALE
+#PRICE`) 
+#library(car)
+#scatterplotMatrix(manhattan)
+#scatterplotMatrix(iris)
+test<-as.matrix(c(manhattan$`LAND SQUARE FEET`, manhattan$`GROSS SQUARE FEET`))
+heatmap(test)
+
+manh222 <- read_excel("C:/Users/Jialing Hu/Desktop/BSAN/Spring/Data Analytics/New folder/rollingsales_manhattan.xls",range = cell_rows(5:27400))
+
+
+man<-manhattan[,c("LAND SQUARE FEET","GROSS SQUARE FEET")]
+cor(man)
+
+colMeans(is.na(manh222))
+lapply(manhattan, class)
+#How to deal with missing value?
+#Could I remove some columns?
+#Borough value is all 1 so I don't this column is not meaningful to our model.
+#plot(log(manhattan$`SALE
+#PRICE`))
+plot((manhattan$`LAND SQUARE FEET`),(manhattan$`SALE
+PRICE`) )
+plot(log(manhattan$`LAND SQUARE FEET`),log(manhattan$`SALE
+PRICE`) )
+
+ggplot(manhattan, aes(x=manhattan$`BUILDING CLASS CATEGORY`, y=manhattan$`SALE\nPRICE`)) + stat_summary(fun.y="mean", geom="bar")
+boxplot(manhattan$`BUILDING CLASS CATEGORY`~manhattan$`SALE
+PRICE`, main="Boxplots of Age by Race")
+
+
+#table(manhattan$`BUILDING CLASS CATEGORY`)
+#CAT<-aggregate(manhattan$`SALE
+#PRICE` ~ manhattan$`BUILDING CLASS CATEGORY`, manhattan, mean)
+manhattan<-manhattan[which(manhattan$`SALE
+PRICE`>0 & manhattan$`LAND SQUARE FEET`>0 & manhattan$`GROSS SQUARE FEET`>0 ),]
+
+
+nrow(manhattan)
+#m<- dim(manhattan)[1]
+#val <- sample(1:m, size = round(m/3), replace= FALSE, prob = rep(1/m,m))
+#manhattan.learn <- manhattan[-val,]
+#manhattan.valid <- manhattan[val,]
+
+#set.seed(0) # Set Seed so that same sample can be reproduced in future also
+# Now Selecting 75% of data as sample from total 'n' rows of the data  
+#sample <- sample.int(n = nrow(manhattan), size = floor(.9*nrow(manhattan)), replace = F)
+#manhattan.learn <- manhattan[sample, ]
+#manhattan.valid <- manhattan[-sample, ]
+#nrow(manhattan.learn)
+#sample
+
+#Linear regression
+m3<-lm(log(`SALE
+PRICE`)~0+log(`LAND SQUARE FEET`)+log(`GROSS SQUARE FEET`)+factor(`BUILDING CLASS CATEGORY`), data = manhattan, na.action=na.exclude)
+summary(m3)
+plot(resid(m3))
+
+nrow(manhattan)
+
+#manhattan[ , -which(names(manhattan) %in% c("BOROUGH","ZIPCODE"))]
+#KNN
+#require(kknn)
+
+#manhattan.kknn <- kknn(`BUILDING CLASS CATEGORY`~., manhattan.learn, manhattan.valid, distance =1, kernel = "gaussian" )
+#summary(manhattan.kknn)
+#2a
+
+PRED= predict(m3,manhattan, interval='prediction')
+PRED1<- data.frame(PRED)
+plot(log(manhattan$`LAND SQUARE FEET`), PRED1$fit)
+plot(PRED1$fit)
+
+t.test(manhattan$`SALE
+PRICE`, PRED1$fit)
+TTest2 <- t.test(nyt2$Age,nyt3$Age)
+
+m33pre<-lm(log(`SALE PRICE`)~0+log(`LAND.SQUARE.FEET`)+log(`GROSS.SQUARE.FEET`)+factor(`TAX.CLASS.AT.PRESENT`)+
+             factor(`BUILDING.CLASS.AT.TIME.OF.SALE`), data = indexqueen)
+summary(m33pre)
+predfinal<-predict(m33pre)
+head(predfinal)
+plot(resid(m33pre))
+
+

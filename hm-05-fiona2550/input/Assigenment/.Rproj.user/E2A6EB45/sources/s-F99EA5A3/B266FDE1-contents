@@ -1,0 +1,31 @@
+multivariate <- read.csv("C:/Users/Jialing Hu/Desktop/BSAN/Spring/Data Analytics/dataset_multipleRegression.csv")
+attach(multivariate)
+
+boxplot(ROLL,UNEM,HGRAD)
+
+lmROLL1<-lm(ROLL~UNEM+HGRAD)
+lmROLL1
+clmROLL1<-coef(lmROLL1)
+clmROLL1
+
+NEW1<-data.frame(UNEM=9,HGRAD=100000)
+plmROLL1<- predict(lmROLL1,NEW1,interval='prediction')
+#clmROLL1<- predict(lmROLL1,NEW1,interval='confidence')
+
+lmROLL2<-lm(ROLL~UNEM+HGRAD+INC)
+clmROLL2<-coef(lmROLL2)
+clmROLL2
+
+NEW2<-data.frame(UNEM=9,HGRAD=100000,INC=30000)
+plmROLL2<- predict(lmROLL2,NEW2,interval='prediction')
+summary(lmROLL1)
+summary(lmROLL2)
+
+gg<-as.list(c(1,2,3))
+
+gg
+c(1,2,3)
+# the residual standard error of Model2 is smaller than Model1
+#Higher Multiple R-squred and Adjusted R-squared
+# As the p-value for both models are much less than 0.05, we reject the null hypothesis that β = 0. 
+# Hence there is a significant relationship between the variables in the linear regression models.
